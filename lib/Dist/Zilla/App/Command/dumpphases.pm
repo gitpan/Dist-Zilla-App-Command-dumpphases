@@ -6,7 +6,7 @@ BEGIN {
   $Dist::Zilla::App::Command::dumpphases::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::App::Command::dumpphases::VERSION = '0.1.2';
+  $Dist::Zilla::App::Command::dumpphases::VERSION = '0.1.3';
 }
 
 # ABSTRACT: Dump a textual representation of each phase's parts.
@@ -16,7 +16,6 @@ BEGIN {
 use Dist::Zilla::App -command;
 use Moose::Autobox;
 use Try::Tiny;
-use Term::ANSIColor qw( colored );
 use Scalar::Util qw( blessed );
 
 ## no critic ( ProhibitAmbiguousNames)
@@ -92,6 +91,9 @@ sub execute {
 
   my $phases = $self->_phases;
 
+  require Term::ANSIColor;
+  Term::ANSIColor->import('colored');
+
   for my $phase ( @{$phases} ) {
     my ( $label, $roles, $description ) = @{$phase};
     my @plugins;
@@ -120,7 +122,10 @@ sub execute {
 1;
 
 __END__
+
 =pod
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -128,7 +133,7 @@ Dist::Zilla::App::Command::dumpphases - Dump a textual representation of each ph
 
 =head1 VERSION
 
-version 0.1.2
+version 0.1.3
 
 =head1 SYNOPSIS
 
@@ -167,14 +172,17 @@ Kent Fredric <kentnl@cpan.org>
 
 Alan Young <harleypig@gmail.com>
 
+=item *
+
+Oliver Mengué <dolmen@cpan.org>
+
 =back
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Kent Fredric <kentnl@cpan.org>.
+This software is copyright (c) 2013 by Kent Fredric <kentnl@cpan.org>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
